@@ -8,24 +8,28 @@ const inputTitle = document.getElementById("#book-name");
 
 
 
+function submitData(){
 
+}
 
-// fetch(API_URL, {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json"
-//   },
-//   body: JSON.stringify()
-// })
-//   .then(response => {
-//     if (response.ok) {
-//       return response.text();
-//     }
-//     throw "Nie udało się wysłać zapytania!";
-//   })
-//   .then(responseText => {
-//     console.log(responseText);
-//   })
-//   .catch(err => {
-//     alert("spróbuj ponownie");
-//   });
+fetch(API_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify()
+})
+  .then(response => {
+
+    console.log(response)
+    if (response.ok) {
+      return response.text();
+    }
+    throw "Nie udało się wysłać zapytania!";
+  })
+  .then(responseText => {
+    console.log( JSON.parse(responseText));
+  })
+  .catch(err => {
+    alert("spróbuj ponownie");
+  });
