@@ -32,12 +32,19 @@ const getData = url =>
       // console.log(data[0].imageUrl);
       // console.log(data[0].title);
       // console.log(data[0].author.name);
-      result.innerHTML = `<ul></ul>`
+      result.innerHTML = `<ul></ul>`;
       data.forEach(e => {
-       
+        const li = document.createElement("li");
+        const img = new Image();
+        const p = document.createElement("p");
 
-result.append()
-       
+        img.src = e.imageUrl;
+        p.innerText = e.title;
+
+        li.append(img);
+        li.append(p);
+
+        result.append(li);
         console.log(e.imageUrl);
         console.log(e.title);
         console.log(e.author.name);
