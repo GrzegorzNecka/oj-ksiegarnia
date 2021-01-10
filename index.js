@@ -23,17 +23,14 @@ async function getData(url = "") {
   return response.json();
 }
 
-
-
-
-const test = (url) => getData(url)
-  .then(data => {
-    console.log(data);
-  })
-  .catch(err => {
-    console.log("coś poszło nie tak");
-  });
-
+const test = url =>
+  getData(url)
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log("coś poszło nie tak");
+    });
 
 //const result = inventory.find( ({ name }) => name === 'cherries' );
 
@@ -42,11 +39,9 @@ formToSearch.addEventListener("submit", e => {
 
   const { 0: input } = e.target;
 
-  input.value;
+ 
 
-test(search_url)
+  test(`${PROXY}${API_URL}${input.value}`);
 
   console.log(input.value);
-
-
 });
