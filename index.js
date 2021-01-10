@@ -8,6 +8,7 @@ const app = document.querySelector(".app");
 const searchEngine = document.querySelector(".form");
 const result = document.querySelector(".results");
 let loader;
+
 //--- auxiliary functions
 
 const createLoader = () => {
@@ -25,16 +26,16 @@ const getExistLoader = () => {
   return loader;
 };
 
-function appendLoader() {
+const appendLoader = () => {
   if (loader === undefined) {
     loader = createLoader();
   } else {
     loader = getExistLoader();
   }
   result.innerHTML = `<ul></ul>`;
-}
+};
 
-function createListBooks(b) {
+const createListBooks = b => {
   const li = document.createElement("li");
   li.classList.add("entry");
 
@@ -51,7 +52,12 @@ function createListBooks(b) {
   li.append(p);
 
   result.append(li);
-}
+};
+
+const clearAppsElems = () => {
+  loader.classList.add("loader-hidden");
+  result.innerHTML = `<ul></ul>`;
+};
 
 //---mian functions
 
@@ -71,8 +77,7 @@ async function getData(url = "") {
 const setRequest = url => {
   getData(url)
     .then(data => {
-      loader.classList.add("loader-hidden");
-      result.innerHTML = `<ul></ul>`;
+      clearAppsElems();
 
       !data.length
         ? (result.innerText = `nie znaleziono`)
