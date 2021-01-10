@@ -2,8 +2,10 @@ import "./style.css";
 const PROXY = "https://cors-anywhere.herokuapp.com/";
 const API_URL = "https://www.goodreads.com/book/auto_complete?format=json&q=";
 
-const formToSearch = document.querySelector(".form");
+const searchEngine = document.querySelector(".form");
 const result = document.querySelector(".results");
+
+//--- auxiliary functions
 
 function addLoader() {
   const loader = new Image();
@@ -11,23 +13,6 @@ function addLoader() {
     "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy-downsized.gif";
   result.innerHTML = `<ul></ul>`;
   result.append(loader);
-}
-
-async function appendData(url = "") {
-  addLoader();
-  const response = await fetch(url, {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "omit", // include, *same-origin, omit
-    headers: { "Content-Type": "application/json" },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify()
-  });
-
-  console.log(response);
-  return response.json();
 }
 
 function setListBooks(b) {
@@ -49,6 +34,25 @@ function setListBooks(b) {
   result.append(li);
 }
 
+//---mian functions
+
+async function appendData(url = "") {
+  addLoader();
+  const response = await fetch(url, {
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "omit", // include, *same-origin, omit
+    headers: { "Content-Type": "application/json" },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify()
+  });
+
+  console.log(response);
+  return response.json();
+}
+
 const getData = url => {
   appendData(url)
     .then(data => {
@@ -61,7 +65,9 @@ const getData = url => {
     });
 };
 
-formToSearch.addEventListener("submit", e => {
+//---event
+
+searchEngine.addEventListener("submit", e => {
   e.preventDefault();
   const { 0: input } = e.target;
   getData(`${PROXY}${API_URL}${input.value}`);
