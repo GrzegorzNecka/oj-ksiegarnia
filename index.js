@@ -27,19 +27,20 @@ async function appendData(url = "") {
 const getData = url =>
   appendData(url)
     .then(data => {
-      console.log(data);
+   
 
-      // console.log(data[0].imageUrl);
-      // console.log(data[0].title);
-      // console.log(data[0].author.name);
+
       result.innerHTML = `<ul></ul>`;
       data.forEach(e => {
         const li = document.createElement("li");
         const img = new Image();
         const p = document.createElement("p");
 
+        li.classList.add("entry");
+        img.classList.add("entry__image");
         img.src = e.imageUrl;
         p.innerText = e.title;
+        p.classList.add("entry__name");
 
         li.append(img);
         li.append(p);
@@ -50,17 +51,7 @@ const getData = url =>
         console.log(e.author.name);
       });
 
-      // for (let i = 0; i < data.length; i++) {
-      //   // console.log(data.imageUrl);
-      //   // console.log(data.title);
-      //   // console.log(data.author.name);
-      //   //   result.replace(result,`
-      //   //   <li class="entry">
-      //   //    <p class="entry__name">${data.author.name}</p>
-      //   //  </li>
 
-      //   //   `);
-      // }
     })
     .catch(err => {
       console.log("coś poszło nie tak");
