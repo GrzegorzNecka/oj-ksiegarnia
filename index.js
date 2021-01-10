@@ -39,8 +39,6 @@ formToSearch.addEventListener("submit", e => {
 
   const { 0: input } = e.target;
 
- 
-
   test(`${PROXY}${API_URL}${input.value}`);
 
   console.log(input.value);
