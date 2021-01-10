@@ -32,7 +32,7 @@ const test = url =>
       console.log("coś poszło nie tak");
     });
 
-//const result = inventory.find( ({ name }) => name === 'cherries' );
+
 
 formToSearch.addEventListener("submit", e => {
   e.preventDefault();
