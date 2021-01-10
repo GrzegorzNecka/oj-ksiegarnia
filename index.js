@@ -7,27 +7,21 @@ const inputTitle = document.getElementById("#book-name");
 const q = "harry%20potter";
 const search_url = `${PROXY}${API_URL}${q}`;
 
+async function postData(url = "") {
+  const response = await fetch(search_url, {
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: { "Content-Type": "application/json" },
+    redirect: "follow", // manual, *follow, error
+    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify() 
+  });
 
-fetch(search_url, {
-  method: "GET", // *GET, POST, PUT, DELETE, etc.
-  mode: "cors", // no-cors, *cors, same-origin
-  cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
-  credentials: "same-origin", // include, *same-origin, omit
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify()
-}).then(response => {
-  if (response.ok) {
-    console.log(response);
-    return response.json()
-  }
-  throw "problem z połączeniem"
-}).then(responseJson => {
-  console.log(responseJson)
-}).catch(err => {
-  alert('coś poszło nie tak')
-})
+  return response.json();
+}
 
-
-postData("API_URL", {}).then(data => {
-  console.log(data); // JSON data parsed by `data.json()` call
+postData(search_url).then(data => {
+  console.log(data);
 });
