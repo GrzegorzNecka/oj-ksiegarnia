@@ -4,7 +4,7 @@ const API_URL = "https://www.goodreads.com/book/auto_complete?format=json&q=";
 
 const formToSearch = document.querySelector(".form");
 const inputTitle = document.getElementById("#book-name");
-const q = "harry%20potter";
+const q = "franz%20kafka";
 const search_url = `${PROXY}${API_URL}${q}`;
 
 async function getData(url = "") {
@@ -29,3 +29,11 @@ getData(search_url)
   .catch(err => {
     alert("coś poszło nie tak");
   });
+
+formToSearch.addEventListener("submit", e => {
+  e.preventDefault();
+
+  console.log(e);
+
+  
+});
