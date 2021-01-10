@@ -25,3 +25,5 @@ Aby zadanie uznać za zakończone, jako użytkownik powinienem być w stanie:
 API którego możesz używać znajduje się pod adresem `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/auto_complete?format=json&q=harry%20potter`, gdzie `q` to parametr z nazwą książki.
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+  "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/auto_complete?format=json&q=harry%20potter";
