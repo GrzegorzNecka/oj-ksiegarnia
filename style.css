@@ -1,6 +1,18 @@
 body {
   background: #eaeaea;
 }
+.loader {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.loader-hidden {
+  visibility: hidden;
+  position: absolute;
+  transform: translateX(-9999);
+}
 
 * {
   font-family: Lato;
@@ -20,7 +32,7 @@ li {
   background: white;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .entry {

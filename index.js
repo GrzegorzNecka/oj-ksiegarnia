@@ -1,18 +1,37 @@
+"use strict";
+
 import "./style.css";
 const PROXY = "https://cors-anywhere.herokuapp.com/";
 const API_URL = "https://www.goodreads.com/book/auto_complete?format=json&q=";
 
+const app = document.querySelector(".app");
 const searchEngine = document.querySelector(".form");
 const result = document.querySelector(".results");
-
+let loader;
 //--- auxiliary functions
 
-function createLoader() {
+const createLoader = () => {
   const loader = new Image();
   loader.src =
     "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy-downsized.gif";
+  loader.classList.add("loader");
+  app.insertBefore(loader, result);
+  return loader;
+};
+
+const getExistLoader = () => {
+  loader = document.querySelector(".loader");
+  loader.classList.remove("loader-hidden");
+  return loader;
+};
+
+function appendLoader() {
+  if (loader === undefined) {
+    loader = createLoader();
+  } else {
+    loader = getExistLoader();
+  }
   result.innerHTML = `<ul></ul>`;
-  result.append(loader);
 }
 
 function createListBooks(b) {
@@ -37,9 +56,9 @@ function createListBooks(b) {
 //---mian functions
 
 async function getData(url = "") {
-  createLoader();
+  appendLoader();
   const response = await fetch(url, {
-    method: "GET", 
+    method: "GET",
     body: JSON.stringify()
   });
 
@@ -52,6 +71,7 @@ async function getData(url = "") {
 const setRequest = url => {
   getData(url)
     .then(data => {
+      loader.classList.add("loader-hidden");
       result.innerHTML = `<ul></ul>`;
 
       !data.length
