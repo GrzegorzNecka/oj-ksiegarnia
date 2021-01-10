@@ -23,7 +23,7 @@ async function getData(url = "") {
   return response.json();
 }
 
-const test = url =>
+const getValue = url =>
   getData(url)
     .then(data => {
       console.log(data);
@@ -32,14 +32,13 @@ const test = url =>
       console.log("coś poszło nie tak");
     });
 
-
-
 formToSearch.addEventListener("submit", e => {
   e.preventDefault();
-
   const { 0: input } = e.target;
 
-  test(`${PROXY}${API_URL}${input.value}`);
+
+  getValue(`${PROXY}${API_URL}${input.value}`);
 
   console.log(input.value);
+
 });
