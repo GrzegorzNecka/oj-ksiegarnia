@@ -3,12 +3,18 @@ const PROXY = "https://cors-anywhere.herokuapp.com/";
 const API_URL = "https://www.goodreads.com/book/auto_complete?format=json&q=";
 
 const formToSearch = document.querySelector(".form");
-const inputTitle = document.getElementById("#book-name");
 const result = document.querySelector(".results");
-const q = "harry%20potter";
-const search_url = `${PROXY}${API_URL}${q}`;
+
+function addLoader() {
+  const loader = new Image();
+  loader.src =
+    "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy-downsized.gif";
+  result.innerHTML = `<ul></ul>`;
+  result.append(loader);
+}
 
 async function appendData(url = "") {
+  addLoader();
   const response = await fetch(url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -24,42 +30,39 @@ async function appendData(url = "") {
   return response.json();
 }
 
-const getData = url =>
+function setListBooks(b) {
+  const li = document.createElement("li");
+  li.classList.add("entry");
+
+  const img = new Image();
+  img.classList.add("entry__image");
+  img.src = b.imageUrl;
+  img.alt = b.title;
+
+  const p = document.createElement("p");
+  p.innerText = b.title;
+  p.classList.add("entry__name");
+
+  li.append(img);
+  li.append(p);
+
+  result.append(li);
+}
+
+const getData = url => {
   appendData(url)
     .then(data => {
-   
-
-
       result.innerHTML = `<ul></ul>`;
-      data.forEach(e => {
-        const li = document.createElement("li");
-        const img = new Image();
-        const p = document.createElement("p");
-
-        li.classList.add("entry");
-        img.classList.add("entry__image");
-        img.src = e.imageUrl;
-        p.innerText = e.title;
-        p.classList.add("entry__name");
-
-        li.append(img);
-        li.append(p);
-
-        result.append(li);
-        console.log(e.imageUrl);
-        console.log(e.title);
-        console.log(e.author.name);
-      });
-
-
+      console.log(data);
+      data.forEach(book => setListBooks(book));
     })
     .catch(err => {
-      console.log("coś poszło nie tak");
+      console.error(err);
     });
+};
 
 formToSearch.addEventListener("submit", e => {
   e.preventDefault();
   const { 0: input } = e.target;
-
   getData(`${PROXY}${API_URL}${input.value}`);
 });
