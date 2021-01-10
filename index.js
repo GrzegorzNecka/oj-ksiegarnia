@@ -7,7 +7,7 @@ const result = document.querySelector(".results");
 
 //--- auxiliary functions
 
-function addLoader() {
+function createLoader() {
   const loader = new Image();
   loader.src =
     "https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy-downsized.gif";
@@ -15,7 +15,7 @@ function addLoader() {
   result.append(loader);
 }
 
-function setListBooks(b) {
+function createListBooks(b) {
   const li = document.createElement("li");
   li.classList.add("entry");
 
@@ -36,8 +36,8 @@ function setListBooks(b) {
 
 //---mian functions
 
-async function appendData(url = "") {
-  addLoader();
+async function getData(url = "") {
+  createLoader();
   const response = await fetch(url, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, *cors, same-origin
@@ -49,16 +49,20 @@ async function appendData(url = "") {
     body: JSON.stringify()
   });
 
-  console.log(response);
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  }
+  throw "problem z połączeniem";
 }
 
-const getData = url => {
-  appendData(url)
+const setRequest = url => {
+  getData(url)
     .then(data => {
       result.innerHTML = `<ul></ul>`;
-      console.log(data);
-      data.forEach(book => setListBooks(book));
+
+      !data.length
+        ? (result.innerText = `nie znaleziono`)
+        : data.forEach(book => createListBooks(book));
     })
     .catch(err => {
       console.error(err);
@@ -70,5 +74,5 @@ const getData = url => {
 searchEngine.addEventListener("submit", e => {
   e.preventDefault();
   const { 0: input } = e.target;
-  getData(`${PROXY}${API_URL}${input.value}`);
+  setRequest(`${PROXY}${API_URL}${input.value}`);
 });
